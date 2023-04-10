@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Api\V1\Public;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\Contact;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
@@ -18,6 +20,23 @@ class ContactController extends Controller
         return $company;
     }
 
+    public function getUserResponsible(Request $request)
+    {
+        $user = $request->user['id'];
+        $company = User::find($user)->company->first();
+        $users = $company->users;
+
+
+        foreach($users as $key => $value ){
+
+           $users2 [] = array( 'id' => $key,'name' => $value['first_name'] . ' '  . $value['last_name']);
+
+        }
+
+        return $users2;
+
+
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -31,12 +50,13 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-         $contact = Contact::create([
+
+        $contact = Contact::create([
             'name' => $request->name,
             'family' => $request->family,
             'mobile' => $request->mobile,
             'email' => $request->email,
-            'responsible' => $request->responsible
+            'responsible' => $request->responsible,
         ]);
 
         $contact->company()->sync([$request->company_id]);

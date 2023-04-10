@@ -24,14 +24,22 @@ Route::prefix('v1')->group(function () {
         $user = $request->user();
          return response()->json(['user' => $user], 200);
     });
+
     Route::POST('/signup', [UserController::class, 'store']);
 
     Route::post('/verified', [PhoneController::class, 'verified']);
 
     Route::post('/verifiedcode', [PhoneController::class, 'verifiedCode']);
 
-
     Route::resource('/contact', ContactController::class);
+
+    Route::post('/get-user-responible', [ContactController::class ,'getUserResponsible']);
+
+
+
+
+
+
 
 
 

@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-// Route::get('/', function (Request $request) {
-//     $user = User::find(3);
-//     return ($user->company()->get());
-// });
+Route::get('/', function (Request $request) {
+  $token = '2|CMnSN6vTcfKAEt8dh2FQ3XOkUSAxF0QoNUsuzFjC';
+    
+
+});
