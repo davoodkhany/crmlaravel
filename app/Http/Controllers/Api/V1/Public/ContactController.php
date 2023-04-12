@@ -26,16 +26,11 @@ class ContactController extends Controller
         $company = User::find($user)->company->first();
         $users = $company->users;
 
-
-        foreach($users as $key => $value ){
-
-           $users2 [] = array( 'id' => $key,'name' => $value['first_name'] . ' '  . $value['last_name']);
-
+        foreach ($users as $key => $value) {
+            $users2[] = array('id' => $key, 'name' => $value['first_name'] . ' ' . $value['last_name']);
         }
 
-        return $users2;
-
-
+        return response()->json(['users' => $users2], 200);
     }
     /**
      * Show the form for creating a new resource.
