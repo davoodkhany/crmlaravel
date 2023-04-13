@@ -46,6 +46,8 @@ class ContactController extends Controller
     public function store(Request $request)
     {
 
+        return $request;
+
         $contact = Contact::create([
             'name' => $request->name,
             'family' => $request->family,

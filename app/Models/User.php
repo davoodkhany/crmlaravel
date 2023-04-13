@@ -56,5 +56,10 @@ class User extends Authenticatable
     }
 
 
+    public function contact(){
+        return $this->belongsToMany(Contact::class);
+        }
+
+
 
 }

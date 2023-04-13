@@ -56,7 +56,6 @@ class PhoneController extends Controller
             $user->phone()->update(['verified' => '1']);
             $token = $user->createToken('token_base_name')->plainTextToken;
             return response()->json(['user' => $user , 'token' => $token], 200);
-
         }
         else{
             return response()->json(['errors' => 'کد یک بار مصرف را درست وارد کنید'],422);

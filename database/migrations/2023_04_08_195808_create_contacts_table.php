@@ -33,6 +33,18 @@ return new class extends Migration
             $table->primary(['company_id', 'contact_id']);
 
         });
+
+        Schema::create('contact_user', function (Blueprint $table) {
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->unsignedBigInteger('contact_id');
+            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
+
+            $table->primary(['user_id', 'contact_id']);
+
+        });
     }
 
     /**
@@ -42,5 +54,6 @@ return new class extends Migration
     {
         Schema::dropIfExists('contacts');
         Schema::dropIfExists('company_contact');
+        Schema::dropIfExists('contact_user');
     }
 };
