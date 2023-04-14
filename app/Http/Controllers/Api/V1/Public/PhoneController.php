@@ -38,7 +38,7 @@ class PhoneController extends Controller
         }
 
         $user->phone()->create([
-            'verification_code' => '2131213123' //$this->generateCode($user->mobile),
+            'verification_code' =>  $this->generateCode($user->mobile),
         ]);
 
     }

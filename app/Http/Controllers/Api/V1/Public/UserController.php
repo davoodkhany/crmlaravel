@@ -47,6 +47,7 @@ class UserController extends Controller
             'email' => $request->email,
         ]);
 
+        dd('davood');
 
         $token = $user->createToken('token_base_name')->plainTextToken;
 
@@ -56,7 +57,7 @@ class UserController extends Controller
 
         $user->company()->sync([$company->id]);
 
-        return response()->json(['user' => $user , 'token' => $token], 200);
+        return response()->json(['user' => $user, 'token' => $token], 200);
     }
 
     /**

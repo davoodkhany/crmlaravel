@@ -17,8 +17,8 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::get('/', function (Request $request) {
-  $token = '2|CMnSN6vTcfKAEt8dh2FQ3XOkUSAxF0QoNUsuzFjC';
-    
+// Route::get('/', function (Request $request) {
 
-});
+//     dd('test');
+
+// });

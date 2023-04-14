@@ -29,7 +29,6 @@ class ContactController extends Controller
         foreach ($users as $key => $value) {
             $users2[] = array('id' => $key, 'name' => $value['first_name'] . ' ' . $value['last_name']);
         }
-
         return response()->json(['users' => $users2], 200);
     }
     /**
@@ -46,8 +45,7 @@ class ContactController extends Controller
     public function store(Request $request)
     {
 
-        return $request;
-
+        dd( $request->user->id);
         $contact = Contact::create([
             'name' => $request->name,
             'family' => $request->family,
@@ -57,6 +55,7 @@ class ContactController extends Controller
         ]);
 
         $contact->company()->sync([$request->company_id]);
+        $contact->user()->sync([$request->user_id]);
 
     }
 
