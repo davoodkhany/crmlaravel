@@ -15,7 +15,7 @@ class Company extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function contacts(){
-        return $this->belongsToMany(Contact::class);
+    public function contact(){
+        return $this->hasMany(Contact::class);
     }
 }

@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        dd('test');
     }
 
     /**
@@ -36,8 +36,9 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(Request $request)
     {
+
 
         $user = User::create([
             'first_name' => $request->first_name,
@@ -46,8 +47,6 @@ class UserController extends Controller
             'mobile' => $request->mobile,
             'email' => $request->email,
         ]);
-
-        dd('davood');
 
         $token = $user->createToken('token_base_name')->plainTextToken;
 
@@ -89,10 +88,10 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
+    // public function update(Request $request, User $user)
+    // {
+    //     //
+    // }
 
     /**
      * Remove the specified resource from storage.

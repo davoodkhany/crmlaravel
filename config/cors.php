@@ -18,9 +18,9 @@ return [
     'paths' => [
         '*',
         'api/*',
-        'sanctum/csrf-cookie',
-        '/login',
-        '/logout',
+        'login',
+        'logout',
+        'sanctum/csrf-cookie'
 
     ],
 

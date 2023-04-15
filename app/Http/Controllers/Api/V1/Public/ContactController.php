@@ -22,7 +22,9 @@ class ContactController extends Controller
 
     public function getUserResponsible(Request $request)
     {
+
         $user = $request->user['id'];
+
         $company = User::find($user)->company->first();
         $users = $company->users;
 
@@ -45,18 +47,37 @@ class ContactController extends Controller
     public function store(Request $request)
     {
 
-        dd( $request->user->id);
-        $contact = Contact::create([
-            'name' => $request->name,
-            'family' => $request->family,
-            'mobile' => $request->mobile,
-            'email' => $request->email,
-            'responsible' => $request->responsible,
-        ]);
+        $user = $request->user();
+        $company_id = $request->user()->company->first()->id;
 
-        $contact->company()->sync([$request->company_id]);
-        $contact->user()->sync([$request->user_id]);
+        $contact_mobile_exist = Contact::where('mobile', $request->mobile)->whereHas('companies', function ($query) use ($company_id) {
+            $query->where('company_id', $company_id);
+        })->first();
 
+        if ($contact_mobile_exist) {
+
+            $errors = $request->validate([
+                'mobile' => 'unique:contacts,mobile',
+            ]);
+
+            return response()->json(['errors' => $errors], 422);
+
+        } else {
+
+            $contact = Contact::create([
+                'name' => $request->name,
+                'family' => $request->family,
+                'mobile' => $request->mobile,
+                'email' => $request->email,
+                'responsible' => $request->responsible,
+            ]);
+
+            $contact->companies()->attach([$company_id]);
+
+            $user->contacts()->attach([$contact->id]);
+
+            return response()->json(200);
+        }
     }
 
     /**

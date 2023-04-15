@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Api\v1\Public;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
-class PhoneRequest extends FormRequest
+class PhoneRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
