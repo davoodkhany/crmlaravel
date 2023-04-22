@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Public;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\Admin\ContactRequest;
 use App\Models\Company;
 use App\Models\Contact;
 use App\Models\User;
@@ -14,10 +15,19 @@ class ContactController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $company = User::find(1)->company;
-        return $company;
+        $contacts = $request->user()->contacts()->get();
+
+        $contacts_all = Contact::get();
+
+
+
+        return response()->json(['contacts' => $contacts, 'contacts_all' => $contacts_all],200);
+
+
+        // $company = User::find(1)->company;
+        // return $company;
     }
 
     public function getUserResponsible(Request $request)
@@ -44,7 +54,7 @@ class ContactController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ContactRequest $request)
     {
 
         $user = $request->user();
@@ -52,16 +62,14 @@ class ContactController extends Controller
 
         $contact_mobile_exist = Contact::where('mobile', $request->mobile)->whereHas('companies', function ($query) use ($company_id) {
             $query->where('company_id', $company_id);
-        })->first();
+        })->exists();
 
         if ($contact_mobile_exist) {
 
             $errors = $request->validate([
                 'mobile' => 'unique:contacts,mobile',
             ]);
-
             return response()->json(['errors' => $errors], 422);
-
         } else {
 
             $contact = Contact::create([
@@ -76,7 +84,8 @@ class ContactController extends Controller
 
             $user->contacts()->attach([$contact->id]);
 
-            return response()->json(200);
+            return response()->json(['message' => 'Contact created successfully.'], 200);
+
         }
     }
 

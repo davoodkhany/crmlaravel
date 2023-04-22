@@ -13,6 +13,7 @@
  */
 
 use App\Http\Controllers\Api\V1\Public\ContactController;
+use App\Http\Controllers\Api\V1\Public\PhoneController;
 use Illuminate\Support\Facades\Route;
  use App\Http\Controllers\Api\V1\Public\UserController;
 use Illuminate\Http\Request;
