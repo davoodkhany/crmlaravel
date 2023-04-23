@@ -17,14 +17,13 @@ class ContactController extends Controller
      */
     public function index(Request $request)
     {
-        $contacts = $request->user()->contacts()->get();
+        $contacts = $request->user()->contacts()->orderBy('created_at', 'desc')->get();
 
-        $contacts_all = Contact::get();
+        $company = $request->user()->company()->first();
 
+        $contacts_all =  $company->contacts()->get();
 
-
-        return response()->json(['contacts' => $contacts, 'contacts_all' => $contacts_all],200);
-
+        return response()->json(['contacts' => $contacts, 'contacts_all' => $contacts_all], 200);
 
         // $company = User::find(1)->company;
         // return $company;
@@ -84,7 +83,12 @@ class ContactController extends Controller
 
             $user->contacts()->attach([$contact->id]);
 
-            return response()->json(['message' => 'Contact created successfully.'], 200);
+            $company = $request->user()->company()->first();
+
+            $contacts_all =  $company->contacts()->orderBy('created_at', 'desc')->get();
+
+
+            return response()->json(['contacts_all' => $contacts_all], 200);
 
         }
     }
